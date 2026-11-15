@@ -1,0 +1,102 @@
+{
+  "$schema": "./stack.schema.json",
+  "schema_version": 1,
+  "name": "Next.js + Firebase — referência da nossa stack",
+  "reference": {
+    "project": "Cognifun",
+    "sources": [
+      "TEAM_PLAYBOOK.md — Engineering baseline",
+      "package.json",
+      "tsconfig.json",
+      "components.json"
+    ],
+    "note": "Base tecnológica reutilizável. Credenciais, contas, dados e regras específicas do produto não fazem parte deste arquivo. Preserve o lockfile e a stack de repositórios existentes."
+  },
+  "runtime": {
+    "preset": "node",
+    "extra_apt_packages": []
+  },
+  "technologies": {
+    "language": {
+      "name": "TypeScript",
+      "strict": true
+    },
+    "frontend": {
+      "framework": "Next.js",
+      "router": "App Router",
+      "ui": "React"
+    },
+    "styling": {
+      "css": "Tailwind CSS",
+      "components": [
+        "shadcn/ui",
+        "Radix UI"
+      ],
+      "icons": "Lucide"
+    },
+    "forms": {
+      "library": "React Hook Form",
+      "validation": "Zod"
+    },
+    "backend": {
+      "framework": "Next.js",
+      "interfaces": [
+        "Route Handlers",
+        "Server Actions"
+      ]
+    },
+    "data": {
+      "platform": "Firebase",
+      "services": [
+        "Authentication",
+        "Cloud Firestore",
+        "Cloud Storage"
+      ],
+      "credentials": "Configurar recursos e credenciais próprios do projeto. Não reutilizar produção."
+    },
+    "ai": {
+      "framework": "Genkit",
+      "enabled": false,
+      "note": "Opção do playbook quando necessária; não consta nas dependências atuais lidas. Ativar somente se o projeto precisar."
+    }
+  },
+  "structure": {
+    "routes": "src/app",
+    "ui_primitives": "src/components/ui",
+    "components": "src/components",
+    "ai": "src/ai",
+    "utilities": "src/lib",
+    "hooks": "src/hooks"
+  },
+  "quality": {
+    "checks": [
+      "lint",
+      "typecheck",
+      "test",
+      "build"
+    ],
+    "principles": [
+      "Preservar stack e lockfile de projetos existentes.",
+      "Validar entradas externas com Zod e respeitar limites cliente/servidor.",
+      "Separar domínio, transporte e interface.",
+      "Usar testes proporcionais ao risco e considerar acessibilidade."
+    ]
+  },
+  "development": {
+    "ports": [
+      {
+        "host": 3000,
+        "container": 3000
+      }
+    ],
+    "install_command": "npm install",
+    "dev_commands": {
+      "app": "npm exec -- next dev --hostname 0.0.0.0 --port 3000",
+      "build": "npm run build",
+      "lint": "npm run lint",
+      "typecheck": "npm run typecheck",
+      "test": "npm test"
+    },
+    "environment": {}
+  }
+}

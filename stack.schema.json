@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stack do projeto OpenClaw",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "name",
+    "runtime",
+    "technologies",
+    "development"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reference": {
+      "type": "object"
+    },
+    "runtime": {
+      "type": "object",
+      "required": [
+        "preset"
+      ],
+      "properties": {
+        "preset": {
+          "enum": [
+            "node",
+            "python",
+            "node-python",
+            "java",
+            "go",
+            "custom"
+          ]
+        },
+        "extra_apt_packages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.+:=~-]*$"
+          }
+        }
+      }
+    },
+    "technologies": {
+      "type": "object"
+    },
+    "structure": {
+      "type": "object"
+    },
+    "quality": {
+      "type": "object"
+    },
+    "development": {
+      "type": "object",
+      "properties": {
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "host",
+              "container"
+            ],
+            "properties": {
+              "host": {
+                "type": "integer",
+                "minimum": 1024,
+                "maximum": 65535
+              },
+              "container": {
+                "type": "integer",
+                "minimum": 1024,
+                "maximum": 65535
+              }
+            }
+          }
+        },
+        "install_command": {
+          "type": "string"
+        },
+        "dev_commands": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "environment": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Z_][A-Z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

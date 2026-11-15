@@ -1,0 +1,22 @@
+name: Verificar instalador
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python3 -m unittest -q test_setup test_stack_config
+      - run: node test_feature_scripts.mjs
+      - run: python3 setup.py package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-projeto-container
+          path: dist/openclaw-projeto-container.zip

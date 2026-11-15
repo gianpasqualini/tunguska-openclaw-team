@@ -1,0 +1,11 @@
+project.json
+.runtime/
+.kit.lock
+__pycache__/
+*.zip
+
+dist/
+
+stack.json
+stack.legacy.json
+project.pre-stack-json.json
