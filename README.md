@@ -1,12 +1,19 @@
-# OpenClaw para um novo projeto — kit v3
+# Tunguska OpenClaw Team
 
 Este kit cria uma instância OpenClaw com ferramentas de desenvolvimento, código montado do computador e memória local com llama.cpp + EmbeddingGemma 300M. Cada extração configurada recebe um identificador próprio de Docker Compose e volumes próprios.
 
 ## Instalar com ajuda de uma LLM
 
-O fluxo principal é abrir este repositório em uma LLM com acesso ao terminal local, como fizemos com o Codex, e pedir que ela conduza a instalação. O arquivo [AGENTS.md](AGENTS.md) contém o roteiro de execução, diagnóstico, retomada e validação. A pessoa informa o projeto e autentica suas próprias contas durante o processo.
+A instalação é conduzida por um assistente com LLM e acesso ao terminal local, como o Codex. O arquivo [AGENTS.md](AGENTS.md) contém o roteiro de execução, diagnóstico, retomada e validação. A pessoa informa o projeto e autentica suas próprias contas durante o processo.
 
-Clone o repositório ou baixe o ZIP do código pelo GitHub. Abra a pasta do kit na ferramenta e envie:
+Clone o repositório:
+
+~~~bash
+git clone https://github.com/gianpasqualini/tunguska-openclaw-team.git
+cd tunguska-openclaw-team
+~~~
+
+Como alternativa, baixe o pacote na [página de versões](https://github.com/gianpasqualini/tunguska-openclaw-team/releases). Abra a pasta do kit na ferramenta com LLM. Use a seguinte solicitação para iniciar:
 
 > Leia AGENTS.md e README.md e execute a instalação completa deste OpenClaw no meu computador. Verifique o Docker e o ambiente do meu usuário, configure a pasta de código que eu indicar e mantenha a equipe e os modelos padrão. Conduza os comandos e diagnósticos até validar agentes, memória e painel. Peça minha participação quando precisar autenticar uma conta ou faltar uma decisão. Ao terminar, informe como consultar o token usando python3 setup.py acesso.
 
@@ -41,7 +48,7 @@ python3 setup.py
 O assistente coleta, nesta ordem
 
 1. Nome do novo projeto e caminho da pasta de código existente.
-2. Leitura automática de **stack.json**, já preenchido com nossa base tecnológica.
+2. Leitura automática de **stack.json**, preenchido com a stack de referência.
 3. Porta do painel. As portas das aplicações vêm de development.ports em stack.json.
 4. Leitura dos comandos e variáveis em development no mesmo JSON, sem perguntas textuais.
 5. Integrações opcionais com GitHub, Linear e Telegram.
@@ -73,7 +80,7 @@ python3 setup.py cli devices approve ID_DA_SOLICITACAO
 
 **Edite stack.json na pasta do kit.** A configuração é declarativa e o setup não pergunta qual é a stack, quais pacotes instalar ou quais comandos executar. Se stack.json ainda não existir, o setup cria-o a partir de stack.example.json. O arquivo stack.schema.json fornece sugestões e validação em editores compatíveis.
 
-A base foi derivada do TEAM_PLAYBOOK do nosso OpenClaw e dos manifests do Cognifun. Inclui Next.js App Router, React, TypeScript estrito, Tailwind, shadcn/ui, Radix, Lucide, React Hook Form, Zod e Firebase. Genkit aparece como opção desabilitada, pois é uma diretriz condicional do playbook e não está no package.json consultado.
+A stack de referência inclui Next.js App Router, React, TypeScript estrito, Tailwind, shadcn/ui, Radix, Lucide, React Hook Form, Zod e Firebase. Genkit é uma opção desabilitada por padrão. Ajuste as tecnologias aos requisitos e manifests do projeto.
 
 | Campo em stack.json | Função |
 | --- | --- |
@@ -112,7 +119,7 @@ Exemplo de trecho do JSON
 }
 ~~~
 
-A porta 3000 é o padrão para o projeto novo. Não copiamos a porta 9002 usada no Cognifun. Se a 3000 estiver ocupada, mude o campo host, mantendo container coerente com o comando de desenvolvimento.
+A porta 3000 é o padrão para aplicações de projetos novos. Se a 3000 estiver ocupada, mude o campo host, mantendo container coerente com o comando de desenvolvimento.
 
 project.json guarda nome, pasta de código, porta do painel, integrações e agentes. A única referência à stack nele é
 
@@ -128,7 +135,7 @@ O JSON define escolhas tecnológicas e comandos, mas não cria sozinho a aplica�
 
 Node.js, Git, GitHub CLI e ferramentas de compilação estão disponíveis em todos os presets. Python instala Python/pip/venv, java instala OpenJDK 21/Maven e go instala os pacotes da distribuição da imagem. custom permite acrescentar ferramentas ao Dockerfile. As dependências da aplicação continuam nos manifests e lockfiles do projeto.
 
-Não foram copiados credenciais, contas Firebase/GCP, dados, regras de negócio nem o projeto Cognifun. Tecnologias listadas em technologies são contexto para desenvolvimento; runtimes do container são instalados por runtime. Serviços externos exigem configuração própria.
+Cada instalação configura suas próprias credenciais, contas Firebase/GCP e dados de aplicação. Tecnologias listadas em technologies são contexto para desenvolvimento; runtimes do container são instalados por runtime. Serviços externos exigem configuração própria.
 
 ### Atualizar uma instalação do kit anterior
 
@@ -227,7 +234,7 @@ python3 setup.py cli agents list
 
 Agentes importados também podem definir `name`, `identity`, `thinkingDefault`, `params.maxTokens` e `delegates`. A lista `delegates` limita a delegação aos IDs presentes nesta instalação; uma lista vazia mantém o agente independente. Referências de modelo podem incluir o perfil de autenticação no formato `provedor/modelo@perfil`.
 
-O campo `workspace_files` aceita o conteúdo de `AGENTS.md`, `SOUL.md`, `IDENTITY.md` e `TEAM_PLAYBOOK.md`. Na primeira aplicação, arquivos existentes recebem uma cópia `.pre-import`; as execuções seguintes preservam edições no workspace. A equipe padrão, seus modelos e instruções portáveis ficam em project.example.json e acompanham o pacote. Alterações individuais ficam em project.json, excluído do ZIP. Gabi, Enzo e Deni não fazem parte do modelo. Memórias, sessões e credenciais existentes não são distribuídas.
+O campo `workspace_files` aceita o conteúdo de `AGENTS.md`, `SOUL.md`, `IDENTITY.md` e `TEAM_PLAYBOOK.md`. Na primeira aplicação, arquivos existentes recebem uma cópia `.pre-import`; as execuções seguintes preservam edições no workspace. A equipe padrão, seus modelos e instruções portáveis ficam em project.example.json e acompanham o pacote. Alterações individuais ficam em project.json, excluído do ZIP. Memórias, sessões e credenciais existentes não são distribuídas.
 
 Ao editar modelos manualmente, use referências do catálogo e mantenha models_configured como true para aplicar sua seleção sem repetir o assistente. Configure como false ou execute o comando models para escolher novamente. Credenciais continuam sendo configuradas pelo OpenClaw.
 
@@ -322,7 +329,7 @@ Distribua o ZIP fornecido ou gere um pacote limpo usando
 python3 setup.py package
 ~~~
 
-O arquivo dist/openclaw-projeto-container.zip inclui apenas Dockerfile, setup.py, features.py, seed.mjs, verify-integrations.mjs, README.md, project.example.json, .gitignore, .dockerignore stack_config.py, stack.example.json, stack.schema.json, runtime-config-preload.mjs e os três arquivos de testes. project.json, stack.json personalizado, .runtime, volumes e arquivos extras ficam fora do pacote. A stack de referência compartilhável está em stack.example.json. Cada pessoa fará seu próprio setup.
+O arquivo dist/openclaw-projeto-container.zip inclui apenas Dockerfile, setup.py, features.py, seed.mjs, verify-integrations.mjs, README.md, AGENTS.md, project.example.json, .gitignore, .dockerignore stack_config.py, stack.example.json, stack.schema.json, runtime-config-preload.mjs e os três arquivos de testes. project.json, stack.json personalizado, .runtime, volumes e arquivos extras ficam fora do pacote. A stack de referência compartilhável está em stack.example.json. Cada pessoa fará seu próprio setup.
 
 Para atualizar uma cópia do kit anterior, substitua somente esses arquivos distribuídos, preservando project.json, stack.json e .runtime, e execute python3 setup.py. O assistente coleta as novas opções. Não extraia sobre a pasta de código nem sobre o diretório da instalação antiga do OpenClaw.
 
