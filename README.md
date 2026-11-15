@@ -236,6 +236,14 @@ Agentes importados também podem definir `name`, `identity`, `thinkingDefault`, 
 
 O campo `workspace_files` aceita o conteúdo de `AGENTS.md`, `SOUL.md`, `IDENTITY.md` e `TEAM_PLAYBOOK.md`. Na primeira aplicação, arquivos existentes recebem uma cópia `.pre-import`; as execuções seguintes preservam edições no workspace. A equipe padrão, seus modelos e instruções portáveis ficam em project.example.json e acompanham o pacote. Alterações individuais ficam em project.json, excluído do ZIP. Memórias, sessões e credenciais existentes não são distribuídas.
 
+### Definições revisadas da equipe
+
+As definições portáveis da equipe incorporam a revisão de 15/11/2026: atribuições delimitadas, especialistas sob demanda, revisão independente, evidências por revisão/ambiente, testes negativos de autorização e tenants, verificação de interação da UI e tratamento de ferramentas indisponíveis sem sucesso inventado. Frontend limita alterações de caches e ferramentas ao escopo autorizado; Backend/Qualidade não podem contornar uma negativa alterando proxy ou controles de rede. Cobaia continua independente. Cada agente recebe AGENTS.md, SOUL.md e uma cópia acessível do playbook.
+
+As definições são portáveis: usam os caminhos do contêiner, a stack do projeto e as integrações efetivamente configuradas. Não pressupõem o Project privado de outra instalação nem criam contas, projetos ou permissões por causa de nomes citados no texto. Sem tracker configurado, o contrato de execução fica no projeto e a ausência de sincronização externa é declarada. Com GitHub ou Linear, a coordenação segue o destino autorizado desta instalação. A política Vertex exige configuração e autorização próprias; nenhuma credencial ou conta é importada.
+
+Em instalações novas, o setup lê esse modelo de equipe. Atualizar os arquivos do kit não substitui automaticamente os `workspace_files` de um project.json existente nem as instruções já importadas: a marca `.project-kit-imported` preserva personalizações. Para adotar as novas definições em uma instalação existente, compare o modelo novo com project.json e os arquivos do workspace, faça backup e mescle somente os trechos desejados; executar novamente o setup sozinho não força a reimportação. Mudanças em modelos, alternativas ou permissões não fazem parte dessa atualização das instruções.
+
 Ao editar modelos manualmente, use referências do catálogo e mantenha models_configured como true para aplicar sua seleção sem repetir o assistente. Configure como false ou execute o comando models para escolher novamente. Credenciais continuam sendo configuradas pelo OpenClaw.
 
 Para adicionar um agente, acrescente sua entrada em agents e execute o setup. Use IDs simples em minúsculas e preserve main. Retirar uma entrada do arquivo não apaga um agente já criado nem seu histórico; o kit deixa de gerenciá-lo e de incluí-lo na lista de delegação do main. A exclusão deliberada deve ser feita depois pela CLI de agentes do OpenClaw.
